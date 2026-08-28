@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wedding Invitation | L & R</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-cream: #faf5f0;
+      --envelope-pink: #f3d7d7;
+      --envelope-dark: #e8c4c4;
+      --gold: #c5a059;
+      --gold-dark: #9e7d3b;
+      --text-dark: #4a3b32;
+      --text-muted: #7d6b5e;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #2b2320;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Mobile Container Frame */
+    .mobile-frame {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: var(--bg-cream);
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Audio Toggle Button */
+    .music-toggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 100;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--gold);
+      color: var(--gold-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+    }
+
+    /* Floating Petals Animation */
+    .petals-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      background: #f7d6dc;
+      border-radius: 150% 0 150% 0;
+      opacity: 0.7;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translate(0, -10px) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.8; }
+      100% { transform: translate(100px, 100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ================= ENVELOPE INTRO SECTION ================= */
+    .intro-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #fcf8f5 0%, #ecd9d9 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .intro-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: var(--gold-dark);
+      text-align: center;
+      margin-bottom: 25px;
+      padding: 0 20px;
+    }
+
+    /* 3D Envelope Design */
+    .envelope-wrapper {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: var(--envelope-pink);
+      border-radius: 6px;
+      box-shadow: 0 15px 35px rgba(163, 117, 117, 0.35);
+    }
+
+    /* Envelope Top Flap */
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-top: 120px solid var(--envelope-dark);
+      transform-origin: top;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 5;
+    }
+
+    .envelope-pocket {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid var(--envelope-pink);
+      border-right: 160px solid var(--envelope-pink);
+      border-bottom: 110px solid var(--envelope-dark);
+      border-top: 110px solid transparent;
+      border-radius: 0 0 6px 6px;
+      z-index: 4;
+    }
+
+    /* Wax Seal */
+    .wax-seal {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 65px;
+      height: 65px;
+      background: radial-gradient(circle, #e6be8a 0%, #b8860b 80%, #8b6508 100%);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.4);
+      z-index: 10;
+      transition: 0.4s ease;
+      animation: pulse-seal 2s infinite;
+    }
+
+    .wax-seal-inner {
+      width: 50px;
+      height: 50px;
+      border: 1.5px dashed rgba(255,255,255,0.7);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #593e0b;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+    }
+
+    @keyframes pulse-seal {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.05); }
+    }
+
+    .open-instructions {
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: fadeInOut 2s infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Envelope Opening States */
+    .envelope-wrapper.open .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+    .envelope-wrapper.open .wax-seal {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+
+    /* ================= MAIN INVITATION CARD CONTENT ================= */
+    .invitation-content {
+      width: 100%;
+      padding: 40px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+    }
+
+    .invitation-content.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Card Floral Header / Lace */
+    .card-header-art {
+      width: 120px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+    }
+
+    .monogram-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      color: var(--gold-dark);
+      border: 2px solid var(--gold);
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
+    }
+
+    .invite-subtitle {
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .couple-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.2rem;
+      color: var(--text-dark);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .couple-names span {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin: 5px 0;
+    }
+
+    .quote {
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 280px;
+      margin: 15px auto 30px;
+      line-height: 1.6;
+    }
+
+    /* Date & Details Box */
+    .details-card {
+      width: 100%;
+      background: var(--white);
+      border: 1px solid rgba(197, 160, 89, 0.3);
+      border-radius: 12px;
+      padding: 30px 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+      position: relative;
+    }
+
+    .date-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      margin-bottom: 5px;
+    }
+
+    .month-year {
+      font-size: 0.9rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 15px auto;
+    }
+
+    .venue-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .venue-address {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* Timeline / Events */
+    .timeline-section {
+      width: 100%;
+      margin: 25px 0;
+    }
+
+    .section-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: var(--gold-dark);
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      background: var(--white);
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      border-left: 3px solid var(--gold);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      text-align: left;
+    }
+
+    .timeline-icon {
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-right: 15px;
+      width: 30px;
+      text-align: center;
+    }
+
+    .timeline-info h4 {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      font-family: 'Cinzel', serif;
+    }
+
+    .timeline-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Action Buttons */
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #d4af37 0%, #aa8222 100%);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
+      transition: 0.3s ease;
+      margin-top: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(197, 160, 89, 0.5);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--text-dark);
+      border: 1px solid var(--gold);
+      box-shadow: none;
+      margin-top: 12px;
+    }
+
+    .footer-note {
+      margin-top: 40px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8rem;
+      color: var(--gold-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="wedding-audio" loop preload="auto">
+    <source src="https://actions.google.com/sounds/v1/water/rain_heavy.ogg" type="audio/ogg">
+  </audio>
+
+  <div class="mobile-frame">
+    
+    <button class="music-toggle" id="musicBtn" title="Play/Pause Music">
+      <i class="fa-solid fa-music"></i>
+    </button>
+
+    <div class="petals-container" id="petals"></div>
+
+    <div class="intro-screen" id="introScreen">
+      <h2 class="intro-title">You're Invited!</h2>
+      
+      <div class="envelope-wrapper" id="envelope">
+        <div class="envelope">
+          <div class="envelope-flap"></div>
+          <div class="envelope-pocket"></div>
+          
+          <div class="wax-seal">
+            <div class="wax-seal-inner">L & R</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="open-instructions">Tap seal to open</p>
+    </div>
+
+    <div class="invitation-content" id="cardContent">
+      
+      <div class="monogram-badge">L & R</div>
+      
+      <p class="invite-subtitle">Together with their families</p>
+      
+      <h1 class="couple-names">
+        Layla
+        <span>&</span>
+        Rayyan
+      </h1>
+
+      <p class="quote">
+        "Two souls, one heart, beginning a lifetime of love and togetherness."
+      </p>
+
+      <div class="details-card">
+        <p class="invite-subtitle">Request the pleasure of your company</p>
+        <div class="divider"></div>
+        <div class="date-badge">23</div>
+        <div class="month-year">October 2026</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Friday at 7:00 PM</p>
+        
+        <div class="divider"></div>
+        
+        <h3 class="venue-title">The Grand Palace</h3>
+        <p class="venue-address">Crystal Ballroom, Gulberg III,<br>Lahore, Pakistan</p>
+      </div>
+
+      <div class="timeline-section">
+        <h3 class="section-heading">Itinerary</h3>
+        
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="fa-solid fa-glass-water"></i></div>
+          <div class="timeline-info">
+            <h4>Welcome & Reception</h4>
+            <p>07:00 PM - Arrival & Refreshments</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="fa-solid fa-ring"></i></div>
+          <div class="timeline-info">
+            <h4>Nikah Ceremony</h4>
+            <p>08:30 PM - The Vows</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-icon"><i class="fa-solid fa-utensils"></i></div>
+          <div class="timeline-info">
+            <h4>Royal Dinner</h4>
+            <p>09:30 PM - Feast & Celebration</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://maps.google.com" target="_blank" class="btn-action">
+        <i class="fa-solid fa-location-dot"></i> View on Google Maps
+      </a>
+
+      <a href="https://wa.me/923001234567?text=Congratulations!%20I%20will%20be%20attending%20the%20wedding." target="_blank" class="btn-action btn-secondary">
+        <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 1.2rem;"></i> RSVP via WhatsApp
+      </a>
+
+      <div class="footer-note">
+        We look forward to celebrating with you!
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const introScreen = document.getElementById('introScreen');
+    const cardContent = document.getElementById('cardContent');
+    const audio = document.getElementById('wedding-audio');
+    const musicBtn = document.getElementById('musicBtn');
+    let isPlaying = false;
+
+    // Open Envelope on Click
+    envelope.addEventListener('click', () => {
+      envelope.classList.add('open');
+      
+      // Start Music
+      audio.play().then(() => {
+        isPlaying = true;
+        musicBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+      }).catch(err => {
+        console.log('Audio autoplay prevented:', err);
+      });
+
+      // Smooth Transition to Card Details
+      setTimeout(() => {
+        introScreen.classList.add('hide');
+        cardContent.classList.add('show');
+      }, 900);
+    });
+
+    // Music Control
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        musicBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+      } else {
+        audio.play();
+        musicBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // Falling Petals Generator
+    const petalsContainer = document.getElementById('petals');
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = Math.random() * 100 + '%';
+      petal.style.width = Math.random() * 8 + 8 + 'px';
+      petal.style.height = Math.random() * 10 + 10 + 'px';
+      petal.style.animationDuration = Math.random() * 4 + 4 + 's';
+      petal.style.animationDelay = Math.random() * 2 + 's';
+      petalsContainer.appendChild(petal);
+
+      setTimeout(() => {
+        petal.remove();
+      }, 8000);
+    }
+
+    setInterval(createPetal, 400);
+  </script>
+</body>
+</html>
+        
