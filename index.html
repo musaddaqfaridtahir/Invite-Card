@@ -3,23 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Wedding Invitation | L & R</title>
+  <title>Wedding Invitation | Zunaisha & Ahmad</title>
   
+  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Alex+Brush&family=Montserrat:wght@300;400;500;600&family=Amiri:ital@1&display=swap" rel="stylesheet">
   
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --bg-cream: #faf5f0;
-      --envelope-pink: #f3d7d7;
-      --envelope-dark: #e8c4c4;
-      --gold: #c5a059;
-      --gold-dark: #9e7d3b;
-      --text-dark: #4a3b32;
-      --text-muted: #7d6b5e;
+      --purple-dark: #20072b;
+      --purple-main: #3d1253;
+      --purple-light: #622285;
+      --purple-soft: #f7effd;
+      --lavender: #d8b4f8;
+      --gold: #d4af37;
+      --gold-light: #f5e7a9;
+      --gold-dark: #99751e;
+      --text-dark: #2a1b33;
+      --text-muted: #6b5777;
       --white: #ffffff;
     }
 
@@ -31,10 +36,685 @@
     }
 
     body {
-      background-color: #2b2320;
+      background-color: #12031a;
       font-family: 'Montserrat', sans-serif;
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #faf4ff 0%, #f4e8fc 50%, #eee0f7 100%);
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* Floating Petals FX */
+    .petals-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      background: linear-gradient(135deg, #c792ea, #9d4edd);
+      border-radius: 150% 0 150% 0;
+      opacity: 0.6;
+      filter: drop-shadow(0 2px 4px rgba(98, 34, 133, 0.2));
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translate(0, -20px) rotate(0deg) scale(0.8); opacity: 0; }
+      15% { opacity: 0.8; }
+      100% { transform: translate(120px, 100vh) rotate(540deg) scale(1.1); opacity: 0; }
+    }
+
+    /* Music Controller Button */
+    .music-btn {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 100;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(61, 18, 83, 0.88);
+      border: 1.5px solid var(--gold);
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+    .music-btn.playing {
+      animation: spin-slow 8s linear infinite;
+    }
+    @keyframes spin-slow {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ================= 3D ENVELOPE OPENER ================= */
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #290838 0%, #13021b 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 90;
+      transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), visibility 1.2s;
+    }
+
+    .intro-overlay.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-header-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      color: var(--gold-light);
+      text-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .envelope-box {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      cursor: pointer;
+      perspective: 1200px;
+    }
+
+    .envelope-body {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #3d1253, #230831);
+      border-radius: 8px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.6), 0 0 0 1px rgba(212, 175, 55, 0.3);
+    }
+
+    .envelope-border {
+      position: absolute;
+      inset: 8px;
+      border: 1px dashed rgba(212, 175, 55, 0.4);
+      border-radius: 5px;
+      pointer-events: none;
+    }
+
+    .envelope-flap-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-top: 125px solid #4a1864;
+      transform-origin: top;
+      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 5;
+      filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3));
+    }
+
+    .envelope-pocket-front {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid #330e47;
+      border-right: 160px solid #330e47;
+      border-bottom: 115px solid #280938;
+      border-top: 105px solid transparent;
+      border-radius: 0 0 8px 8px;
+      z-index: 4;
+    }
+
+    /* Royal Wax Seal */
+    .wax-seal-btn {
+      position: absolute;
+      top: 108px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, #f9e29d 0%, #d4af37 60%, #8a6411 100%);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5), inset 0 2px 5px rgba(255,255,255,0.6);
+      z-index: 10;
+      transition: all 0.4s ease;
+      animation: pulse-glow 2s infinite alternate;
+    }
+
+    .wax-seal-btn::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1.5px dashed #5e4307;
+      border-radius: 50%;
+    }
+
+    .seal-monogram {
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #443003;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.4);
+    }
+
+    @keyframes pulse-glow {
+      0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+      100% { transform: translate(-50%, -50%) scale(1.06); box-shadow: 0 0 25px rgba(212, 175, 55, 0.8); }
+    }
+
+    .tap-hint {
+      margin-top: 35px;
+      font-size: 0.8rem;
+      color: var(--lavender);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .envelope-box.is-open .envelope-flap-top {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+    .envelope-box.is-open .wax-seal-btn {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.3);
+    }
+
+    /* ================= CARD DETAILS ================= */
+    .invitation-wrapper {
+      padding: 50px 22px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease 0.6s, transform 1s ease 0.6s;
+    }
+
+    .invitation-wrapper.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .floral-accent {
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .floral-accent::before, .floral-accent::after {
+      content: "";
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .floral-accent::after {
+      background: linear-gradient(to left, transparent, var(--gold));
+    }
+
+    .bismillah {
+      font-family: 'Amiri', serif;
+      font-size: 1.4rem;
+      color: var(--purple-main);
+      margin-bottom: 15px;
+    }
+
+    .sub-invite-text {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .names-container {
+      margin: 15px 0 20px;
+    }
+
+    .bride-name, .groom-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.4rem;
+      color: var(--purple-main);
+      line-height: 1.15;
+      text-shadow: 0 2px 4px rgba(61, 18, 83, 0.12);
+    }
+
+    .and-ampersand {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      display: block;
+      margin: 6px 0;
+    }
+
+    .verse-box {
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 320px;
+      line-height: 1.7;
+      margin: 10px auto 30px;
+      padding: 0 10px;
+      border-left: 2px solid var(--lavender);
+      border-right: 2px solid var(--lavender);
+    }
+
+    /* Live Countdown */
+    .countdown-section {
+      width: 100%;
+      background: linear-gradient(135deg, #ffffff, #fbf7ff);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 16px;
+      padding: 22px 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(61, 18, 83, 0.05);
+    }
+
+    .countdown-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      color: var(--purple-light);
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .timer-unit {
+      background: var(--purple-soft);
+      padding: 10px 5px;
+      border-radius: 10px;
+      border: 1px solid rgba(216, 180, 248, 0.5);
+    }
+
+    .timer-val {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--purple-main);
+      display: block;
+    }
+
+    .timer-lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    /* Program Events */
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: var(--purple-main);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+    }
+
+    .event-card {
+      width: 100%;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 25px 20px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 8px 30px rgba(61, 18, 83, 0.06);
+      position: relative;
+      text-align: left;
+    }
+
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--gold), var(--purple-light));
+    }
+
+    .event-badge {
+      display: inline-block;
+      background: var(--purple-soft);
+      color: var(--purple-main);
+      border: 1px solid var(--lavender);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .event-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.35rem;
+      color: var(--purple-main);
+      margin-bottom: 8px;
+    }
+
+    .event-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .event-meta i {
+      color: var(--gold-dark);
+      width: 16px;
+    }
+
+    .event-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      line-height: 1.5;
+      border-top: 1px dashed rgba(0,0,0,0.08);
+      padding-top: 10px;
+    }
+
+    /* Venue Card */
+    .venue-card {
+      width: 100%;
+      background: linear-gradient(135deg, #3d1253, #230831);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 30px 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 12px 35px rgba(32, 7, 43, 0.4);
+      border: 1px solid var(--gold);
+    }
+
+    .venue-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      color: var(--gold-light);
+      margin: 10px 0 6px;
+    }
+
+    .venue-details {
+      font-size: 0.85rem;
+      color: var(--lavender);
+      margin-bottom: 20px;
+    }
+
+    /* Buttons */
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #d4af37 0%, #aa8222 100%);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+      margin-top: 12px;
+    }
+
+    /* Color Palette */
+    .palette-section {
+      width: 100%;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .palette-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--purple-main);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .palette-colors {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .color-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .footer-blessing {
+      font-family: 'Alex Brush', cursive;
+      font-size: 2.2rem;
+      color: var(--purple-main);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Direct Live Wedding Instrumental Audio Stream -->
+  <audio id="weddingMusic" loop preload="auto" crossorigin="anonymous">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=romantic-ambient-wedding-111452.mp3" type="audio/mpeg">
+    <source src="https://actions.google.com/sounds/v1/ambiences/outdoor_celebration.ogg" type="audio/ogg">
+  </audio>
+
+  <div class="app-container">
+    
+    <!-- Music Button -->
+    <button class="music-btn" id="musicToggle" title="Play / Mute Music">
+      <i class="fa-solid fa-music"></i>
+    </button>
+
+    <!-- Petals Container -->
+    <div class="petals-container" id="petalsBox"></div>
+
+    <!-- 3D Envelope Overlay -->
+    <div class="intro-overlay" id="introOverlay">
+      <h2 class="intro-header-text">Royal Invitation</h2>
+      
+      <div class="envelope-box" id="envelopeBox">
+        <div class="envelope-body">
+          <div class="envelope-border"></div>
+          <div class="envelope-flap-top"></div>
+          <div class="envelope-pocket-front"></div>
+          
+          <div class="wax-seal-btn" title="Click to Open">
+            <div class="seal-monogram">Z & A</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="tap-hint"><i class="fa-solid fa-hand-pointer"></i> Tap the seal to open</p>
+    </div>
+
+    <!-- Main Invitation Content -->
+    <div class="invitation-wrapper" id="invitationContent">
+      
+      <div class="floral-accent">
+        <i class="fa-solid fa-seedling"></i>
+      </div>
+
+      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      
+      <p class="sub-invite-text">Together with their families</p>
+      
+      <div class="names-container">
+        <h1 class="bride-name">Zunaisha Farid</h1>
+        <span class="and-ampersand">&</span>
+        <h1 class="groom-name">Ahmad</h1>
+      </div>
+
+      <p class="verse-box">
+        "And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy."
+      </p>
+
+      <!-- Live Countdown -->
+      <div class="countdown-section">
+        <h3 class="countdown-title"><i class="fa-regular fa-clock"></i> Countdown to Celebration</h3>
+        <div class="countdown-grid">
+          <div class="timer-unit">
+            <span class="timer-val" id="days">00</span>
+            <span class="timer-lbl">Days</span>
+          </div>
+          <div class="timer-unit">
+            <span class="timer-val" id="hours">00</span>
+            <span class="timer-lbl">Hours</span>
+          </div>
+          <div class="timer-unit">
+            <span class="timer-val" id="mins">00</span>
+            <span class="timer-lbl">Mins</span>
+          </div>
+          <div class="timer-unit">
+            <span class="timer-val" id="secs">00</span>
+            <span class="timer-lbl">Secs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Events -->
+      <h2 class="section-title">Program of Events</h2>
+
+      <!-- Mehndi -->
+      <div class="event-card">
+        <span class="event-badge">Day 01 • Mehndi Night</span>
+        <h3 class="event-title">Mehndi Celebration</h3>
+        <div class="event-meta">
+          <i class="fa-solid fa-calendar-day"></i>
+          <span>Thursday, 10 September 2026</span>
+        </div>
+        <div class="event-meta">
+          <i class="fa-solid fa-clock"></i>
+          <span>08:00 PM Onwards</span>
+        </div>
+        <div class="event-meta">
+          <i class="fa-solid fa-location-pin"></i>
+          <span>Bride & Groom</span>
+        </div>
+        <p class="event-desc">
+          An evening full of traditional beats, dholak, henna, and colorful festivities.
+        </p>
+      </div>
+
+      <!-- Barat -->
+      <div class="event-card">
+        <span class="event-badge">Day 02 • Barat & Reception</span>
+        <h3 class="event-title">The Grand Barat</h3>
+        <div class="event-meta">
+          <i class="fa-solid fa-calendar-day"></i>
+          <span>Friday, 11 September 2026</span>
+        </div>
+        <div class="event-meta">
+          <i class="fa-solid fa-clock"></i>
+          <span>07:30 PM Onwards</span>
+        </div>
+        <div class="event-meta">
+          <i class="fa-solid fa-ring"></i>
+          <span>Nikah & Dinner Reception</span>
+        </div>
+        <p class="event-desc">
+          Join us as we witness the sacred union, followed by a royal dinner feast.
+        </p>
+      </div>
+
+      <!-- Venue -->
+      <div class="venue-card">
+        <i class="fa-solid fa-building-columns" style="font-size: 2rem; color: var(--gold-light);"></i>
+        <h3 class="venue-name">Bride & Groom</h3>
+        <p class="venue-details">Event Venue & Banquet</p>
+        
+        <a href="https://maps.google.com" target="_blank" class="btn-gold">
+          <i class="fa-solid fa-map-location-dot"></i> Get Directions on Google Maps
+        </a>
+      </div>
+
+      <!-- Dress Code -->
+      <div class="palette-section">
+        <h4 class="palette-title">Color Palette & Dress Code</h4>
+        <div class="palette-colors">
+          <div class="color-swatch" style="background: #3d1253;" title="Royal Purple"></div>
+          <div class="color-swatch" style="background: #622285;" title="Lavender"></div>
+          <div class="color-swatch" style="background: #d4af37;" title="Gold"></div>
+          <div class="color-swatch" style="background: #ffffff;" title="Ivory White"></div>
+        </div>
+      </div>
+
+      <!-- WhatsApp RSVP -->
+      <a href="https://wa.me/923017241594?text=Salam!%20Heartiest%20congratulations%20on%20Zunaisha%20%26%20Ahmad's%20wedding.%20We%20will%20surely%20join%20the%20celebration." 
+         target="_blank" class="btn-gold btn-whatsapp">
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> RSVP via WhatsApp (0301-7241594)
+      </a>
+
+      <div class="footer-bless      justify-content: center;
       align-items: center;
       min-height: 100vh;
       overflow-x: hidden;
