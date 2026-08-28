@@ -1,118 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Wedding Invitation | Zunaisha & Ahmad</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Amiri:ital@1&display=swap" rel="stylesheet">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Amiri:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    :root{--pm:#3d1253;--pl:#622285;--ps:#f7effd;--lav:#d8b4f8;--gd:#d4af37;--gl:#f5e7a9;--td:#2a1b33;--tm:#6b5777;}
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-    body{background:#12031a;font-family:'Montserrat',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;color:var(--td);overflow-x:hidden;}
-    .app{width:100%;max-width:440px;min-height:100vh;background:radial-gradient(circle at top,#faf4ff 0%,#f4e8fc 50%,#eee0f7 100%);position:relative;box-shadow:0 25px 60px rgba(0,0,0,0.7);overflow-y:auto;overflow-x:hidden;}
-    .petals{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:20;overflow:hidden;}
-    .petal{position:absolute;background:linear-gradient(135deg,#c792ea,#9d4edd);border-radius:150% 0 150% 0;opacity:0.6;animation:fall linear infinite;}
-    @keyframes fall{0%{transform:translate(0,-20px) rotate(0deg);opacity:0;}15%{opacity:0.8;}100%{transform:translate(120px,100vh) rotate(540deg);opacity:0;}}
-    .m-btn{position:fixed;top:18px;right:18px;z-index:100;width:42px;height:42px;border-radius:50%;background:rgba(61,18,83,0.9);border:1.5px solid var(--gd);color:var(--gl);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 5px 15px rgba(0,0,0,0.3);}
-    .intro{position:fixed;inset:0;background:radial-gradient(circle,#290838 0%,#13021b 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99;cursor:pointer;transition:0.8s ease;}
-    .intro.hide{opacity:0;visibility:hidden;display:none!important;}
-    .intro h2{font-family:'Great Vibes',cursive;font-size:2.6rem;color:var(--gl);margin-bottom:25px;}
-    .env{position:relative;width:320px;height:220px;perspective:1000px;}
-    .env-b{width:100%;height:100%;background:linear-gradient(145deg,#3d1253,#230831);border-radius:8px;box-shadow:0 20px 45px rgba(0,0,0,0.6);border:1px dashed rgba(212,175,55,0.4);position:relative;}
-    .flap{position:absolute;top:0;left:0;width:0;height:0;border-left:160px solid transparent;border-right:160px solid transparent;border-top:125px solid #4a1864;transform-origin:top;transition:0.8s ease;z-index:5;}
-    .pocket{position:absolute;bottom:0;left:0;width:0;height:0;border-left:160px solid #330e47;border-right:160px solid #330e47;border-bottom:115px solid #280938;border-top:105px solid transparent;border-radius:0 0 8px 8px;z-index:4;}
-    .seal{position:absolute;top:108px;left:50%;transform:translate(-50%,-50%);width:75px;height:75px;background:radial-gradient(circle,#f9e29d 0%,#d4af37 60%,#8a6411 100%);border-radius:50%;display:flex;justify-content:center;align-items:center;box-shadow:0 8px 25px rgba(0,0,0,0.6);z-index:10;font-family:'Cinzel Decorative',serif;font-weight:700;color:#443003;font-size:1.2rem;}
-    .env.open .flap{transform:rotateX(180deg);}
-    .env.open .seal{opacity:0;transform:translate(-50%,-50%) scale(0.2);transition:0.4s ease;}
-    .hint{margin-top:35px;font-size:0.85rem;color:var(--lav);letter-spacing:3px;text-transform:uppercase;animation:bounce 2s infinite;}
-    @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-    .card{padding:50px 22px 60px;display:flex;flex-direction:column;align-items:center;text-align:center;opacity:0;transform:translateY(20px);transition:0.8s ease 0.3s;}
-    .card.show{opacity:1;transform:translateY(0);}
-    .bism{font-family:'Amiri',serif;font-size:1.4rem;color:var(--pm);margin-bottom:15px;}
-    .sub{font-size:0.75rem;text-transform:uppercase;letter-spacing:4px;color:var(--tm);margin-bottom:15px;}
-    .c-name{font-family:'Great Vibes',cursive;font-size:3.4rem;color:var(--pm);line-height:1.15;}
-    .amp{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gd);margin:6px 0;display:block;}
-    .verse{font-style:italic;font-size:0.85rem;color:var(--tm);max-width:320px;line-height:1.7;margin:10px auto 30px;padding:0 10px;border-left:2px solid var(--lav);border-right:2px solid var(--lav);}
-    .cd-box{width:100%;background:#fff;border:1px solid rgba(212,175,55,0.35);border-radius:16px;padding:20px 15px;margin-bottom:25px;box-shadow:0 10px 25px rgba(61,18,83,0.05);}
-    .cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;}
-    .cd-u{background:var(--ps);padding:8px 4px;border-radius:10px;border:1px solid rgba(216,180,248,0.5);}
-    .cd-v{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--pm);display:block;}
-    .cd-l{font-size:0.65rem;text-transform:uppercase;color:var(--tm);}
-    .sec-t{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--pm);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;}
-    .ev-c{width:100%;background:#fff;border-radius:16px;padding:22px 18px;margin-bottom:18px;border:1px solid rgba(212,175,55,0.3);box-shadow:0 8px 30px rgba(61,18,83,0.06);text-align:left;position:relative;overflow:hidden;}
-    .ev-c::before{content:'';position:absolute;top:0;left:0;width:5px;height:100%;background:linear-gradient(to bottom,var(--gd),var(--pl));}
-    .badge{display:inline-block;background:var(--ps);color:var(--pm);border:1px solid var(--lav);padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
-    .ev-t{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--pm);margin-bottom:8px;}
-    .ev-m{display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--td);margin-bottom:5px;}
-    .ev-m i{color:var(--gd);width:16px;}
-    .ev-d{font-size:0.8rem;color:var(--tm);margin-top:8px;line-height:1.5;border-top:1px dashed rgba(0,0,0,0.08);padding-top:8px;}
-    .ven-c{width:100%;background:linear-gradient(135deg,#3d1253,#230831);color:#fff;border-radius:16px;padding:25px 18px;margin-bottom:22px;border:1px solid var(--gd);}
-    .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:linear-gradient(135deg,#d4af37,#aa8222);color:#fff;text-decoration:none;border-radius:30px;font-size:0.9rem;font-weight:600;border:none;cursor:pointer;margin-top:10px;}
-    .btn-w{background:linear-gradient(135deg,#25D366,#128C7E);margin-top:12px;}
+    :root {
+      --purple-dark: #22072e;
+      --purple-main: #3d1253;
+      --purple-light: #6a248f;
+      --gold: #c5a059;
+      --gold-dark: #9e7d3b;
+      --gold-light: #fae8be;
+      --bg-cream: #f7effb;
+      --card-bg: #fffefe;
+      --text-dark: #2c1d36;
+      --text-muted: #6e587a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { background-color: #12031a; font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; }
+
+    .mobile-frame { width: 100%; max-width: 430px; min-height: 100vh; background: var(--bg-cream); position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.6); overflow-y: auto; overflow-x: hidden; }
+
+    /* Floating Music Control */
+    .music-btn { position: fixed; top: 15px; right: 15px; z-index: 1000; width: 40px; height: 40px; border-radius: 50%; background: rgba(61, 18, 83, 0.9); border: 1.5px solid var(--gold); color: var(--gold-light); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .music-btn.playing { animation: rotate-music 6s linear infinite; }
+    @keyframes rotate-music { 100% { transform: rotate(360deg); } }
+
+    /* Floating Petals FX */
+    .petals-box { position: fixed; inset: 0; pointer-events: none; z-index: 15; overflow: hidden; }
+    .petal { position: absolute; background: linear-gradient(135deg, #d8b4f8, #c792ea); border-radius: 150% 0 150% 0; opacity: 0.5; animation: fall linear infinite; }
+    @keyframes fall { 0% { transform: translate(0, -20px) rotate(0deg); opacity: 0; } 20% { opacity: 0.7; } 100% { transform: translate(80px, 100vh) rotate(360deg); opacity: 0; } }
+
+    /* 3D Envelope Opener Overlay */
+    .intro-screen { position: fixed; inset: 0; background: radial-gradient(circle, #290838 0%, #12021b 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 999; cursor: pointer; transition: opacity 0.8s ease; }
+    .intro-screen.hide { opacity: 0 !important; visibility: hidden !important; display: none !important; }
+    .intro-title { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--gold-light); margin-bottom: 25px; text-shadow: 0 2px 10px rgba(197, 160, 89, 0.4); }
+
+    .envelope { position: relative; width: 300px; height: 200px; background: linear-gradient(145deg, #3d1253, #230831); border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); border: 1px dashed rgba(197, 160, 89, 0.4); }
+    .flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 115px solid #4f1b6a; transform-origin: top; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); z-index: 5; }
+    .pocket { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 150px solid #350f48; border-right: 150px solid #350f48; border-bottom: 110px solid #280938; border-top: 100px solid transparent; border-radius: 0 0 8px 8px; z-index: 4; }
+    .seal { position: absolute; top: 100px; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; background: radial-gradient(circle, var(--gold-light), var(--gold), var(--gold-dark)); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: 'Cinzel', serif; font-weight: 700; color: #3d1253; font-size: 1.1rem; box-shadow: 0 6px 20px rgba(0,0,0,0.5); z-index: 10; animation: pulse-seal 2s infinite alternate; }
+    @keyframes pulse-seal { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.08); } }
+    .envelope.open .flap { transform: rotateX(180deg); }
+    .envelope.open .seal { opacity: 0; }
+
+    .tap-hint { margin-top: 35px; font-size: 0.8rem; color: #d8b4f8; letter-spacing: 3px; text-transform: uppercase; animation: bounce 2s infinite; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+    /* Individual Scrollable Cards */
+    .cards-container { padding: 30px 16px 50px; display: flex; flex-direction: column; gap: 25px; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s; }
+    .cards-container.revealed { opacity: 1 !important; transform: translateY(0) !important; }
+
+    .card-sheet { background: var(--card-bg); border-radius: 16px; padding: 35px 22px; box-shadow: 0 12px 35px rgba(61, 18, 83, 0.08); border: 1px solid rgba(197, 160, 89, 0.35); position: relative; text-align: center; overflow: hidden; }
+    .card-sheet::after { content: ''; position: absolute; inset: 8px; border: 1px dashed rgba(197, 160, 89, 0.3); border-radius: 10px; pointer-events: none; }
+
+    .monogram-badge { width: 70px; height: 70px; border-radius: 50%; border: 1.5px solid var(--gold); background: #ffffff; display: flex; justify-content: center; align-items: center; font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.3rem; color: var(--purple-main); margin: 0 auto 15px; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2); }
+    .bismillah { font-family: 'Amiri', serif; font-size: 1.35rem; color: var(--purple-main); margin-bottom: 12px; }
+    .invite-lead { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+
+    .couple-title { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--purple-main); line-height: 1.1; margin: 10px 0; }
+    .ampersand { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold); display: block; margin: 4px 0; }
+    .quote-text { font-style: italic; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; max-width: 290px; margin: 15px auto 0; }
+
+    .card-ribbon { font-size: 1.8rem; color: var(--gold); margin-bottom: 10px; }
+    .card-tag { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--purple-main); background: #f5eafb; padding: 4px 15px; border-radius: 20px; border: 1px solid var(--gold); margin-bottom: 15px; }
+    .event-heading { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--purple-main); margin-bottom: 15px; }
+
+    .event-detail-row { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.9rem; color: var(--text-dark); margin-bottom: 8px; }
+    .event-detail-row i { color: var(--gold); width: 18px; }
+    .event-description { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(197, 160, 89, 0.4); }
+
+    /* Venue Card Specifics */
+    .venue-card { background: linear-gradient(135deg, #380f4d, #20062b); color: #ffffff; border-color: var(--gold); }
+    .venue-card .event-heading { color: var(--gold-light); }
+    .venue-card .event-description { color: #d8b4f8; border-top-color: rgba(255,255,255,0.15); }
+    .venue-address-box { background: rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px; margin: 15px 0; border: 1px solid rgba(197, 160, 89, 0.3); font-size: 0.85rem; color: var(--gold-light); }
+
+    /* Action Buttons */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold), #aa8222); color: #ffffff; text-decoration: none; border-radius: 30px; font-size: 0.88rem; font-weight: 600; letter-spacing: 0.5px; box-shadow: 0 6px 20px rgba(197, 160, 89, 0.35); border: none; cursor: pointer; margin-top: 8px; }
+    .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3); margin-top: 12px; }
+
+    .footer-signature { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--purple-main); text-align: center; margin: 15px 0 10px; }
   </style>
 </head>
 <body>
-  <audio id="mus" loop preload="auto"><source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=romantic-ambient-wedding-111452.mp3" type="audio/mpeg"></audio>
-  <div class="app">
-    <button class="m-btn" id="mBtn"><i class="fa-solid fa-music"></i></button>
-    <div class="petals" id="pt"></div>
-    <div class="intro" id="inOv" onclick="opn()">
-      <h2>Royal Invitation</h2>
-      <div class="env" id="eBx"><div class="env-b"><div class="flap"></div><div class="pocket"></div><div class="seal">Z & A</div></div></div>
-      <p class="hint"><i class="fa-solid fa-hand-pointer"></i> Tap anywhere to open</p>
+
+  <!-- Audio Stream -->
+  <audio id="weddingMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/11/06/audio_c89b70b58e.mp3?filename=pop-summer-trending-125439.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="mobile-frame">
+    <button class="music-btn" id="musicBtn" title="Music Toggle"><i class="fa-solid fa-music"></i></button>
+    <div class="petals-box" id="petalsBox"></div>
+
+    <!-- Envelope Screen -->
+    <div class="intro-screen" id="introScreen">
+      <h2 class="intro-title">You're Invited!</h2>
+      <div class="envelope" id="envelope">
+        <div class="flap"></div>
+        <div class="pocket"></div>
+        <div class="seal">Z & A</div>
+      </div>
+      <p class="tap-hint"><i class="fa-solid fa-hand-pointer"></i> Tap to Open</p>
     </div>
-    <div class="card" id="cCnt">
-      <div style="font-size:1.6rem;color:var(--gd);margin-bottom:10px;">❦</div>
-      <div class="bism">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-      <p class="sub">Together with their families</p>
-      <div style="margin:10px 0 20px;"><h1 class="c-name">Zunaisha Farid</h1><span class="amp">&</span><h1 class="c-name">Ahmad</h1></div>
-      <p class="verse">"And of His signs is that He created for you from yourselves mates that you may find tranquility in them..."</p>
-      <div class="cd-box">
-        <div style="font-family:'Cinzel';font-size:0.85rem;letter-spacing:2px;color:var(--pl);text-transform:uppercase;"><i class="fa-regular fa-clock"></i> Countdown</div>
-        <div class="cd-grid">
-          <div class="cd-u"><span class="cd-v" id="d">00</span><span class="cd-l">Days</span></div>
-          <div class="cd-u"><span class="cd-v" id="h">00</span><span class="cd-l">Hours</span></div>
-          <div class="cd-u"><span class="cd-v" id="m">00</span><span class="cd-l">Mins</span></div>
-          <div class="cd-u"><span class="cd-v" id="s">00</span><span class="cd-l">Secs</span></div>
+
+    <!-- Scrollable Cards -->
+    <div class="cards-container" id="cardsContainer">
+      
+      <!-- CARD 1: COVER -->
+      <div class="card-sheet">
+        <div class="monogram-badge">Z & A</div>
+        <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <p class="invite-lead">Together with their families</p>
+        
+        <h1 class="couple-title">
+          Zunaisha Farid
+          <span class="ampersand">&</span>
+          Ahmad
+        </h1>
+
+        <p class="quote-text">
+          "Two souls with but a single thought, two hearts that beat as one."
+        </p>
+      </div>
+
+      <!-- CARD 2: MEHNDI -->
+      <div class="card-sheet">
+        <div class="card-ribbon"><i class="fa-solid fa-spa"></i></div>
+        <span class="card-tag">Event 01</span>
+        <h2 class="event-heading">Mehndi Night</h2>
+        
+        <div class="event-detail-row">
+          <i class="fa-regular fa-calendar-check"></i>
+          <strong>Thursday, 10 September 2026</strong>
         </div>
+        <div class="event-detail-row">
+          <i class="fa-regular fa-clock"></i>
+          <span>08:00 PM Onwards</span>
+        </div>
+        <div class="event-detail-row">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Bride & Groom Banquet</span>
+        </div>
+
+        <p class="event-description">
+          Join us for a vibrant night of traditional henna, dholak rhythms, music, and colorful celebrations!
+        </p>
       </div>
-      <h2 class="sec-t">Events Schedule</h2>
-      <div class="ev-c">
-        <span class="badge">Day 01 • Mehndi</span><h3 class="ev-t">Mehndi Night</h3>
-        <div class="ev-m"><i class="fa-solid fa-calendar-day"></i><span>Thursday, 10 September 2026</span></div>
-        <div class="ev-m"><i class="fa-solid fa-clock"></i><span>08:00 PM Onwards</span></div>
-        <div class="ev-m"><i class="fa-solid fa-location-pin"></i><span>Bride & Groom</span></div>
-        <p class="ev-d">An evening full of traditional beats, dholak, henna, and colorful festivities.</p>
+
+      <!-- CARD 3: BARAT -->
+      <div class="card-sheet">
+        <div class="card-ribbon"><i class="fa-solid fa-ring"></i></div>
+        <span class="card-tag">Event 02</span>
+        <h2 class="event-heading">The Grand Barat</h2>
+        
+        <div class="event-detail-row">
+          <i class="fa-regular fa-calendar-check"></i>
+          <strong>Friday, 11 September 2026</strong>
+        </div>
+        <div class="event-detail-row">
+          <i class="fa-regular fa-clock"></i>
+          <span>07:30 PM Onwards</span>
+        </div>
+        <div class="event-detail-row">
+          <i class="fa-solid fa-utensils"></i>
+          <span>Nikah & Dinner Reception</span>
+        </div>
+
+        <p class="event-description">
+          We request the honor of your presence and warm blessings as we tie the sacred knot of marriage.
+        </p>
       </div>
-      <div class="ev-c">
-        <span class="badge">Day 02 • Barat</span><h3 class="ev-t">The Grand Barat</h3>
-        <div class="ev-m"><i class="fa-solid fa-calendar-day"></i><span>Friday, 11 September 2026</span></div>
-        <div class="ev-m"><i class="fa-solid fa-clock"></i><span>07:30 PM Onwards</span></div>
-        <div class="ev-m"><i class="fa-solid fa-ring"></i><span>Nikah & Dinner Reception</span></div>
-        <p class="ev-d">Join us as we witness the sacred union, followed by a royal dinner feast.</p>
+
+      <!-- CARD 4: VENUE & GOOGLE MAPS -->
+      <div class="card-sheet venue-card">
+        <div class="card-ribbon" style="color: var(--gold-light);"><i class="fa-solid fa-location-dot"></i></div>
+        <span class="card-tag" style="background: rgba(255,255,255,0.1); color: var(--gold-light);">Venue Location</span>
+        <h2 class="event-heading">Bride & Groom</h2>
+        
+        <div class="venue-address-box">
+          <i class="fa-solid fa-map-pin"></i> <strong>Bride & Groom Marquee / Banquet</strong><br>
+          <span style="font-size: 0.8rem; color: #d8b4f8;">Main Road Venue, Pakpattan</span>
+        </div>
+
+        <!-- Direct Google Maps Navigation Intent Link -->
+        <a href="https://www.google.com/maps/search/?api=1&query=Bride+%26+Groom+Marquee+Pakpattan" target="_blank" class="btn">
+          <i class="fa-solid fa-map-location-dot"></i> Open in Google Maps
+        </a>
+
+        <!-- WhatsApp RSVP -->
+        <a href="https://wa.me/923017241594?text=Salam!%20Heartiest%20congratulations%20on%20Zunaisha%20%26%20Ahmad's%20wedding.%20We%20will%20surely%20attend!" 
+           target="_blank" class="btn btn-whatsapp">
+          <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> WhatsApp RSVP (0301-7241594)
+        </a>
+
+        <p class="event-description">
+          Tap above to get live driving directions directly on your device.
+        </p>
       </div>
-      <div class="ven-c">
-        <i class="fa-solid fa-building-columns" style="font-size:2rem;color:var(--gl);"></i>
-        <h3 style="font-family:'Cinzel';font-size:1.4rem;color:var(--gl);margin:8px 0 4px;">Bride & Groom</h3>
-        <p style="font-size:0.85rem;color:var(--lav);margin-bottom:15px;">Event Venue & Banquet</p>
-        <a href="https://maps.google.com" target="_blank" class="btn"><i class="fa-solid fa-map-location-dot"></i> Google Maps Directions</a>
+
+      <div class="footer-signature">
+        Looking forward to welcoming you!
       </div>
-      <a href="https://wa.me/923017241594?text=Salam!%20Heartiest%20congratulations%20on%20Zunaisha%20%26%20Ahmad's%20wedding." target="_blank" class="btn btn-w">
-        <i class="fa-brands fa-whatsapp" style="font-size:1.3rem;"></i> RSVP via WhatsApp (0301-7241594)
-      </a>
-      <div style="font-family:'Great Vibes',cursive;font-size:2.2rem;color:var(--pm);margin-top:30px;">Looking forward to your presence!</div>
+
     </div>
   </div>
+
   <script>
-    const eBx=document.getElementById('eBx'),inOv=document.getElementById('inOv'),cCnt=document.getElementById('cCnt'),mus=document.getElementById('mus'),mBtn=document.getElementById('mBtn');
-    let isP=false,op=false;
-    function opn(){if(op)return;op=true;eBx.classList.add('open');try{mus.play().then(()=>{isP=true;}).catch(()=>{});}catch(e){}setTimeout(()=>{inOv.classList.add('hide');cCnt.classList.add('show');},700);}
-    mBtn.addEventListener('click',(e)=>{e.stopPropagation();if(isP){mus.pause();mBtn.innerHTML='<i class="fa-solid fa-volume-xmark"></i>';}else{mus.play().catch(()=>{});mBtn.innerHTML='<i class="fa-solid fa-music"></i>';}isP=!isP;});
-    const tD=new Date("September 10, 2026 20:00:00").getTime();
-    setInterval(()=>{const df=tD-new Date().getTime();if(df>0){document.getElementById("d").innerText=Math.floor(df/86400000);document.getElementById("h").innerText=Math.floor((df%86400000)/3600000);document.getElementById("m").innerText=Math.floor((df%3600000)/60000);document.getElementById("s").innerText=Math.floor((df%60000)/1000);}},1000);
-    const pt=document.getElementById('pt');
-    setInterval(()=>{const p=document.createElement('div');p.className='petal';p.style.left=Math.random()*100+'%';p.style.width=Math.random()*10+8+'px';p.style.height=Math.random()*12+10+'px';p.style.animationDuration=Math.random()*4+5+'s';pt.appendChild(p);setTimeout(()=>p.remove(),9000);},450);
+    const introScreen = document.getElementById('introScreen');
+    const envelope = document.getElementById('envelope');
+    const cardsContainer = document.getElementById('cardsContainer');
+    const music = document.getElementById('weddingMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    let isPlaying = false, isOpened = false;
+
+    function openInvitation(e) {
+      if (e) e.preventDefault();
+      if (isOpened) return;
+      isOpened = true;
+
+      envelope.classList.add('open');
+
+      try {
+        music.play().then(() => {
+          isPlaying = true;
+          musicBtn.classList.add('playing');
+        }).catch(() => {});
+      } catch (e) {}
+
+      setTimeout(() => {
+        introScreen.classList.add('hide');
+        cardsContainer.classList.add('revealed');
+      }, 650);
+    }
+
+    introScreen.addEventListener('touchstart', openInvitation, { passive: false });
+    introScreen.addEventListener('click', openInvitation);
+
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isPlaying) {
+        music.pause();
+        musicBtn.classList.remove('playing');
+        musicBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+      } else {
+        music.play().catch(() => {});
+        musicBtn.classList.add('playing');
+        musicBtn.innerHTML = '<i class="fa-solid fa-music"></i>';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    const petalsBox = document.getElementById('petalsBox');
+    setInterval(() => {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.width = Math.random() * 10 + 8 + 'px';
+      p.style.height = Math.random() * 12 + 10 + 'px';
+      p.style.animationDuration = Math.random() * 4 + 4 + 's';
+      petalsBox.appendChild(p);
+      setTimeout(() => p.remove(), 8000);
+    }, 450);
   </script>
 </body>
 </html>
