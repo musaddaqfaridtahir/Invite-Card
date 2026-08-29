@@ -20,7 +20,7 @@
     .petal{position:absolute;background:linear-gradient(135deg,#d8b4f8,#c792ea);border-radius:150% 0 150% 0;opacity:0.5;animation:fall linear infinite;}
     @keyframes fall{0%{transform:translate(0,-20px) rotate(0deg);opacity:0;}20%{opacity:0.7;}100%{transform:translate(80px,100vh) rotate(360deg);opacity:0;}}
 
-    .intro{position:fixed;inset:0;background:radial-gradient(circle,#2d083e,#11011a);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:999;cursor:pointer;transition:opacity 0.5s ease;padding:20px;}
+    .intro{position:fixed;inset:0;background:radial-gradient(circle,#2d083e,#11011a);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:999;cursor:pointer;transition:opacity 0.6s ease;padding:20px;}
     .intro h2{font-family:'Great Vibes',cursive;font-size:3rem;color:var(--gl);margin-bottom:25px;text-align:center;text-shadow:0 2px 10px rgba(197,160,89,0.4);pointer-events:none;}
     
     .env{position:relative;width:340px;height:230px;background:linear-gradient(145deg,#44135e,#230831);border-radius:12px;box-shadow:0 20px 45px rgba(0,0,0,0.7);border:1px dashed rgba(197,160,89,0.4);cursor:pointer;}
@@ -61,17 +61,16 @@
 </head>
 <body>
 
-  <!-- Robust Direct Audio (Local File + Fast Open CDN) -->
-  <audio id="mus" loop preload="auto">
+  <!-- Smart Audio Engine -->
+  <audio id="mus" preload="auto">
     <source src="music.mp3" type="audio/mpeg">
-    <source src="https://ia801503.us.archive.org/15/items/romantic-wedding-flute-music/romantic-flute-wedding.mp3" type="audio/mpeg">
   </audio>
 
   <div class="app">
     <button class="m-btn" id="mBtn" onclick="toggleMusic(event)"><i class="fa-solid fa-music"></i></button>
     <div class="petals" id="pt"></div>
 
-    <!-- Clickable Envelope Overlay -->
+    <!-- Envelope Overlay -->
     <div class="intro" id="inOv" onclick="openInvitation()">
       <h2>You're Invited!</h2>
       <div class="env" id="eBx">
@@ -84,10 +83,10 @@
       </p>
     </div>
 
-    <!-- Cards Feed -->
+    <!-- Scrollable Content Feed -->
     <div class="feed" id="cFeed">
       
-      <!-- Card 1: Cover -->
+      <!-- Card 1: Main Cover -->
       <div class="sheet">
         <div class="mono">Z & A</div>
         <div class="bism">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
@@ -125,7 +124,7 @@
         <p class="desc">We request the honor of your presence and warm blessings as we tie the sacred knot of marriage.</p>
       </div>
 
-      <!-- Card 4: Venue -->
+      <!-- Card 4: Venue & Google Maps -->
       <div class="sheet venue">
         <div style="font-size:2rem;color:var(--gl);margin-bottom:8px;"><i class="fa-solid fa-location-dot"></i></div>
         <span class="tag" style="background:rgba(255,255,255,0.1);color:var(--gl);">Venue Location</span>
@@ -149,22 +148,63 @@
 
   <script>
     let isP = false, isOpened = false;
+    let fadeTimer = null;
 
-    function playAudioDirectly() {
-      var mus = document.getElementById('mus');
-      var mBtn = document.getElementById('mBtn');
-      if (!mus) return;
-
-      mus.volume = 1.0;
-      var promise = mus.play();
-      if (promise !== undefined) {
-        promise.then(function() {
+    // Smooth Fade-In function (0 to target volume in 2.2 seconds)
+    function fadeInAudio(audioElem, targetVolume = 0.9, duration = 2200) {
+      clearInterval(fadeTimer);
+      audioElem.volume = 0;
+      var playPromise = audioElem.play();
+      if (playPromise !== undefined) {
+        playPromise.then(function() {
           isP = true;
+          var mBtn = document.getElementById('mBtn');
           if (mBtn) mBtn.classList.add('playing');
-        }).catch(function(error) {
-          console.log("Audio waiting for explicit touch:", error);
+          
+          var step = targetVolume / (duration / 50);
+          fadeTimer = setInterval(function() {
+            if (audioElem.volume < targetVolume - step) {
+              audioElem.volume += step;
+            } else {
+              audioElem.volume = targetVolume;
+              clearInterval(fadeTimer);
+            }
+          }, 50);
+        }).catch(function(e){
+          console.log("Waiting for user tap to play audio.");
         });
       }
+    }
+
+    // Smooth Fade-Out function
+    function fadeOutAudio(audioElem, duration = 1200, callback) {
+      clearInterval(fadeTimer);
+      var step = audioElem.volume / (duration / 50);
+      fadeTimer = setInterval(function() {
+        if (audioElem.volume > step) {
+          audioElem.volume -= step;
+        } else {
+          audioElem.volume = 0;
+          audioElem.pause();
+          clearInterval(fadeTimer);
+          if (callback) callback();
+        }
+      }, 50);
+    }
+
+    // Handle seamless loop with smooth fade-out near the end
+    var mus = document.getElementById('mus');
+    if (mus) {
+      mus.addEventListener('timeupdate', function() {
+        if (mus.duration && (mus.duration - mus.currentTime <= 2.5) && !mus.isLoopFading) {
+          mus.isLoopFading = true;
+          fadeOutAudio(mus, 2000, function() {
+            mus.currentTime = 0;
+            mus.isLoopFading = false;
+            fadeInAudio(mus, 0.9, 2000);
+          });
+        }
+      });
     }
 
     function openInvitation() {
@@ -176,7 +216,7 @@
       var cFeed = document.getElementById('cFeed');
 
       if (eBx) eBx.classList.add('open');
-      playAudioDirectly();
+      if (mus) fadeInAudio(mus);
 
       setTimeout(function() {
         if (inOv) {
@@ -193,25 +233,23 @@
 
     function toggleMusic(e) {
       if (e) e.stopPropagation();
-      var mus = document.getElementById('mus');
       var mBtn = document.getElementById('mBtn');
       if (!mus) return;
 
       if (isP) {
-        mus.pause();
+        fadeOutAudio(mus, 800);
         if (mBtn) {
           mBtn.classList.remove('playing');
           mBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
         }
+        isP = false;
       } else {
-        mus.play().then(function(){
-          if (mBtn) {
-            mBtn.classList.add('playing');
-            mBtn.innerHTML = '<i class="fa-solid fa-music"></i>';
-          }
-        }).catch(function(){});
+        fadeInAudio(mus, 0.9, 1200);
+        if (mBtn) {
+          mBtn.classList.add('playing');
+          mBtn.innerHTML = '<i class="fa-solid fa-music"></i>';
+        }
       }
-      isP = !isP;
     }
 
     // Live Countdown
