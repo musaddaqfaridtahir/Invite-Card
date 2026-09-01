@@ -6,11 +6,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X8F7YNYLFG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X8F7YNYLFG');
+  </script>
+
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <title>Wedding Invitation | Zunaisha & Ahmed</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Great+Vibes&family=Montserrat:wght@400;500;600&family=Amiri:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     :root{--p:#3d1253;--pl:#6a248f;--g:#c5a059;--gl:#fae8be;--bg:#f4ebf8;}
     *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -63,7 +73,6 @@
     .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:linear-gradient(135deg,var(--g),#aa8222);color:#fff;text-decoration:none;border-radius:30px;font-size:0.88rem;font-weight:600;margin-top:6px;border:none;}
     .btn-w{background:linear-gradient(135deg,#25D366,#128C7E);margin-top:8px;}
 
-    /* Developer Branding Link */
     .dev-credit{text-align:center;margin-top:20px;padding-top:10px;}
     .dev-credit a{font-size:0.75rem;color:#8e749c;text-decoration:none;letter-spacing:1px;display:inline-flex;align-items:center;gap:5px;transition:0.3s;}
     .dev-credit a span{color:var(--g);font-weight:600;}
@@ -97,7 +106,7 @@
     <!-- Scrollable Content Feed -->
     <div class="feed" id="cFeed">
       
-      <!-- Card 1: Main Cover (From Zunaisha's Family) -->
+      <!-- Card 1: Main Cover -->
       <div class="sheet">
         <div class="mono">Z & A</div>
         <div class="bism">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
@@ -157,17 +166,17 @@
           <span style="font-size:0.8rem;color:#d8b4f8;">Pakpattan Venue</span>
         </div>
 
-        <!-- Direct Google Maps Link -->
-        <a href="https://maps.app.goo.gl/tkr9JGagTBYPwCJd6?g_st=ac" target="_blank" class="btn">
+        <!-- Google Maps Link with Analytics Event -->
+        <a href="https://maps.app.goo.gl/tkr9JGagTBYPwCJd6?g_st=ac" target="_blank" class="btn" onclick="gtag('event', 'click_maps', {'event_category': 'Engagement'});">
           <i class="fa-solid fa-map-location-dot"></i> Open in Google Maps
         </a>
 
-        <!-- WhatsApp RSVP Buttons for Both Numbers -->
-        <a href="https://wa.me/923024040363?text=Salam!%20Heartiest%20congratulations%20on%20Zunaisha%20%26%20Ahmed's%20wedding.%20We%20will%20surely%20attend!" target="_blank" class="btn btn-w">
+        <!-- WhatsApp RSVP Buttons with Analytics Event -->
+        <a href="https://wa.me/923024040363?text=Salam!%20Heartiest%20congratulations%20on%20Zunaisha%20%26%20Ahmed's%20wedding.%20We%20will%20surely%20attend!" target="_blank" class="btn btn-w" onclick="gtag('event', 'click_rsvp', {'contact': '03024040363'});">
           <i class="fa-brands fa-whatsapp"></i> RSVP: 0302-4040363
         </a>
 
-        <a href="https://wa.me/923026920744?text=Salam!%20Heartiest%20congratulations%20on%20Zunaisha%20%26%20Ahmed's%20wedding.%20We%20will%20surely%20attend!" target="_blank" class="btn btn-w">
+        <a href="https://wa.me/923026920744?text=Salam!%20Heartiest%20congratulations%20on%20Zunaisha%20%26%20Ahmed's%20wedding.%20We%20will%20surely%20attend!" target="_blank" class="btn btn-w" onclick="gtag('event', 'click_rsvp', {'contact': '03026920744'});">
           <i class="fa-brands fa-whatsapp"></i> RSVP: 0302-6920744
         </a>
         
@@ -178,7 +187,7 @@
 
       <!-- Developer Minimal Branding -->
       <div class="dev-credit">
-        <a href="https://wa.me/923111122125?text=Salam!%20I%20saw%20the%20digital%20wedding%20invitation%20and%20want%20to%20create%20one." target="_blank">
+        <a href="https://wa.me/923017241594?text=Salam!%20I%20saw%20the%20digital%20wedding%20invitation%20and%20want%20to%20create%20one." target="_blank" onclick="gtag('event', 'click_developer_lead');">
           Crafted with <i class="fa-solid fa-heart" style="color:#e25555;font-size:0.7rem;"></i> by <span>Developer</span>
         </a>
       </div>
@@ -190,7 +199,7 @@
     let isP = false, isOpened = false;
     let fadeTimer = null;
 
-    // Smooth Fade-In function (0 to target volume in 2.2 seconds)
+    // Smooth Fade-In function
     function fadeInAudio(audioElem, targetVolume = 0.9, duration = 2200) {
       clearInterval(fadeTimer);
       audioElem.volume = 0;
@@ -250,6 +259,11 @@
     function openInvitation() {
       if (isOpened) return;
       isOpened = true;
+
+      // Track Envelope Open in Google Analytics
+      if (typeof gtag === 'function') {
+        gtag('event', 'envelope_open', {'event_category': 'Engagement'});
+      }
 
       var eBx = document.getElementById('eBx');
       var inOv = document.getElementById('inOv');
